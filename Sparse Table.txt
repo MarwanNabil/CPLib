@@ -1,0 +1,68 @@
+ 
+ 
+ 
+#include <bits/stdc++.h>
+ 
+using namespace std;
+ 
+const int N = 1e5;
+const int LOGN = 17;
+int sparse[N][LOGN];
+int LG[N];
+int arr[N];
+int n;
+//sparse[i][j] =>  [i][2^j]
+void build(){
+     LG[1] = 0;
+     for(int i = 2 ; i <= n ; i++){
+        LG[i] = LG[i>>1] + 1;  //LG[i] = LG[i/2] + 1;
+     }
+    LG[0] = -1;
+    for(int i = 0 ; i < n ; i++){
+       LG[i+1] = LG[i] + !(i&( i + 1 )); //!(i&( i + 1 )) == 1 when i is power of two
+       sparse[i][0] = i;
+    }    
+    
+    for(int j = 1 ; (1<<j) <= n ; j++){
+        for(int i = 0 ; i + (1<<j) <= n ; i++){
+             int a = sparse[i][j-1];
+             int b = sparse[i + (1 << (j-1))][j-1];
+             sparse[i][j] = (arr[a] < arr[b] ? a : b);  
+        }
+    }
+ 
+}
+ 
+int findMinIdx(int s , int e){
+   int len = e - s + 1;
+   int lg = LG[len];
+   int a = sparse[s][lg];
+   int b = sparse[e - (1<<lg) + 1][lg];
+   return (arr[a] < arr[b] ? a : b);
+}
+ 
+ 
+ 
+int main() {
+ 
+ 
+   ios_base::sync_with_stdio(0);
+   cin.tie(0);
+   cout.tie(0);
+   int t = 1;
+   //cin >> t;
+   while (t--)run_case();
+ 
+ 
+   return 0;
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

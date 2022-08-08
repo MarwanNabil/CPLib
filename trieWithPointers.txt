@@ -1,0 +1,42 @@
+class node{
+public :
+	bool end;
+	vector < node * > child;
+};
+
+node * create(){
+	node * ptr = (node *) malloc(sizeof(node));
+	ptr->end = false;
+	ptr->child = vector < node * >(26 , NULL);
+	return ptr;
+}
+
+class trie{
+public:
+	node* head;
+	trie(){
+		head = create();
+	}
+	void insert(string s){
+		node* current = head;
+		for(auto x : s){
+			if(current->child[x - 'a'] != NULL){
+				current = current->child[x - 'a'];
+			} else {
+				current->child[x - 'a'] = create();
+				current = current->child[x - 'a'];
+			}
+		}
+		current->end = true;
+	}
+	void traverse(string s , node * current){
+		if(current->end){
+			cout << s << endl;
+		}
+		for(int i = 0; i < 26; i++){
+			if(current->child[i]){
+				traverse(s + char(i + 'a') , current->child[i]);
+			}
+		}
+	}
+};

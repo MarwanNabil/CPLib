@@ -1,0 +1,26 @@
+vector<int> get_divs(int k) {
+    vector<int> dev;
+ 
+    for (int i = 1; i * i <= k; i++) {
+        if (k % i == 0) {
+            dev.push_back(i);
+            
+            if (k / i != i)
+                dev.push_back(k / i);
+        }
+    }
+    return dev;
+}
+
+/////////////////////////////
+
+set  ll  div(ll x){
+    set  ll  ans;
+    for(ll j = 1; jj = x; j++){
+        if(x % j == 0){
+            ans.insert(j);
+            ans.insert(xj);
+        }
+    }
+    return ans;
+}

@@ -1,0 +1,9 @@
+const int mod = 1e9+7;
+
+int fastP(int b, int e){
+    if(!e)
+        return 1;
+    if(e & 1)
+        return b * 1ll * fastP(b * 1ll * b % mod, e >> 1) % mod;
+    return fastP(b * 1ll * b % mod, e >> 1) % mod;
+}

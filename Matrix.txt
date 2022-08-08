@@ -1,0 +1,77 @@
+
+#define bits(a)     __builtin_popcountll(a)
+
+typedef long long ll;
+typedef vector < int > row;
+typedef vector < row > matrix;
+
+matrix zero_matrix(int r , int c){
+    return matrix(r , row(c , 0));
+}
+
+//Identity Matrix are always square matrix
+matrix identity_matrix(int r){
+    matrix ret = zero_matrix(r , r);
+    for(int i = 0; i < r; i++){
+        ret[i][i] = 1;
+    }
+    return ret;
+}
+
+matrix add(matrix &a , matrix &b){
+    matrix ret = zero_matrix(a.size() , a[0].size());
+    for(int i = 0; i < a.size(); i++){
+        for(int j = 0; j < a[0].size(); j++){
+            ret[i][j] = a[i][j] + b[i][j];
+        }
+    }
+    return ret;
+}
+
+//adds one to the main diagonal
+matrix add_identity(matrix &a){
+    matrix b = identity_matrix(a.size());
+    return add(a , b);
+}
+
+//Multiplying Matrices take N^3 Time
+matrix mul(const matrix &a , const matrix &b){
+        assert(a[0].size() == b.size());
+        matrix ret = zero_matrix(a.size() , b[0].size());
+        for(int i = 0; i < a.size(); i++){
+            for(int j = 0; j < b[0].size(); j++){
+                for(int k = 0; k < a[0].size(); k++){
+                    ret[i][j] += a[i][k] * b[k][j];
+                }
+            }
+        }
+        return ret;
+}
+
+matrix Pow(const matrix &a , ll k){
+    if(k == 0)
+        return identity_matrix(a.size());
+    if(k & 1)
+        return mul(a , Pow(a , k - 1));
+    return Pow(mul(a , a) , k >> 1);
+}
+
+//Sum Pows works only with Square Matrix
+//You need summation of matrix pows from 1 to k
+//A^1 + A^2 + A^3 + A^4 + A^5 + A^6
+// = (A^1 + A^2 + A^3) + A^3*(A^1 + A^2 + A^3)
+// = (I + A^3)*(A^1 + A^2 + A^3)
+//for odds K
+//A^1 + A^2 + A^3 = A^1 * (I + A^1 + A^2)
+matrix sumPows(matrix a , ll k){
+    if(k == 0){
+        return zero_matrix(a.size() , a.size());
+    }
+    if(k & 1){
+        matrix ret = sumPows(a , k - 1);
+        return mul(a , add_identity(ret));
+    }
+    matrix ret1 = Pow(a , k);
+    matrix ret2 = sumPows(a , k >> 1);
+    return mul(add_identity(ret1) , ret2);
+}

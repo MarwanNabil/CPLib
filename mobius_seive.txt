@@ -1,0 +1,27 @@
+const int N = 2e4+5;
+
+bool prime[N];
+int mobius[N];
+
+void mobius_seive(){
+	prime[1] = 0;
+	mobius[1] = 1;
+	for(int i = 2; i < N; i++){
+		mobius[i] = 1;
+		prime[i] = 1;
+	}
+	
+	for(long long i = 2; i < N; i++){
+		if(!prime[i]){
+			continue;
+		}
+		mobius[i] = -1;
+		for(int j = 2*i; j < N; j += i){
+			prime[j] = 0;
+			if((j % (i*i)) == 0)
+				mobius[j] = 0;
+			else
+				mobius[j] = -mobius[j];
+		}
+	}
+}

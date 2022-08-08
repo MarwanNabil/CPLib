@@ -1,0 +1,50 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+typedef long long ll;
+
+typedef long double ld;
+
+const int N = 105;
+
+int n;
+int a[N];
+int b[N];
+
+int c[N];
+int d[N];
+
+int visID;
+int used[N];
+int with[N];
+
+bool match(int idx){
+    for(int i = 1; i <= n; i++){
+        if( __Check_If_Edge_Exist__ && used[i] != visID){
+            used[i] = visID;
+            if(!with[i] || match(with[i])){
+                with[i] = idx;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+int main(){
+    scanf("%d" , &n);
+    for(int i = 1; i <= n; i++){
+        scanf("%d%d" , &a[i] , &b[i]);
+    }
+    for(int i = 1; i <= n; i++){
+        scanf("%d%d" , &c[i] , &d[i]);
+    }
+    int bst = 0;
+    for(int i = 1; i <= n; i++){
+        visID++;
+        if(match(i))
+            bst++;
+    }
+    printf("%d\n" , bst);
+}

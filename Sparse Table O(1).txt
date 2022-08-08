@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int N = 2e5+5;
+
+int n;
+int m;
+int ar[N];
+int lg[N];
+long long st[N][19];
+
+void build(){
+    lg[1] = 0;
+    for(int i = 2; i <= n; i++){
+        lg[i] = lg[i >> 1] + 1;
+    }
+    for(int i = 1; i <= n; i++){
+        st[i][0] = ar[i];
+    }
+    for(int l = 1; (1 << l) <= n; l++){
+        for(int i = 1; (i + (1 << (l)))-1 <= n; i++){
+            st[i][l] = min(st[i][l - 1] , st[i + (1 << (l - 1))][l - 1]);
+        }
+    }
+}
+
+long long query(int l , int r){
+    int len = r - l + 1;
+    int l_g = lg[len];
+    return min(st[l][l_g] , st[r - (1 << l_g) + 1][l_g]);
+}
+
+int main(){
+    scanf("%d%d" , &n , &m);
+    for(int i = 1; i <= n; i++){
+        scanf("%d" , &ar[i]);
+    }
+    build();
+    while(m--){
+        int l , r;
+        scanf("%d%d" , &l , &r);
+        printf("%lld\n" , query(l , r));
+    }
+}
+
+

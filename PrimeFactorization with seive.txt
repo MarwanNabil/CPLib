@@ -1,0 +1,24 @@
+const int N = 1e7+2;
+
+int factor[N];
+
+void seive(){
+    factor[1] = 1;
+    for(long long i = 2; i < N; i++){
+        if(!factor[i]){
+            factor[i] = i;
+            for(long long j = i*i; j < N; j += i){
+                factor[j] = i;
+            }
+        }
+    }
+}
+
+vector < int > factorization(int x){
+    vector < int > ret;
+    while(x != 1){
+        ret.push_back(factor[x]);
+        x /= factor[x];
+    }
+    return ret;
+}

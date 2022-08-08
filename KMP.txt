@@ -1,0 +1,20 @@
+auto kmp = [&](const vector < int >& x, const vector< int >& y) {
+		//no of occ x in y
+        int _m = x.size(), _n = y.size();
+        vector < int > f(_m + 1);
+        int i = 0, j = f[0] = -1;
+        while (i < _m)
+        {
+            while (~j && x[i] != x[j]) j = f[j];
+            f[++i] = ++j;
+        }
+        int cnt = 0;
+        i = j = 0;
+        while (i < _n)
+        {
+            while (~j && y[i] != x[j]) j = f[j];
+            i++, j++;
+            if (j == _m) cnt++, j = 0;
+        }
+        return cnt;
+    };

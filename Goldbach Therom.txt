@@ -1,0 +1,48 @@
+/*|In The Name Of Allah|*/
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int N = 2e7+1;
+
+bool nprm[N];
+
+vector < int > prime;
+
+int main(){
+    int cnt = 0;
+    prime.push_back(2);
+    for(long long i = 3; i <= 1e5; i += 2){
+        if(nprm[i])
+            continue;
+        prime.push_back(i);
+        for(long long j = i*i; j < 18409202; j += i){
+            nprm[j] = 1;
+        }
+    }
+    int n;
+    while(scanf("%d" , &n)){
+          if(n < 8){
+            puts("Impossible.");
+            continue;
+          }
+          if(n & 1){
+            printf("2 3 ");
+            n -= 5;
+          } else {
+            printf("2 2 ");
+            n -= 4;
+          }
+          for(int i = 0; i < prime.size(); i++){
+            int x = prime[i];
+            if(x > n)
+                break;
+            int y = n - x;
+            if(!nprm[y]){
+                printf("%d %d\n" , min(x , y) , max(x , y));
+                break;
+            }
+          }
+    }
+}

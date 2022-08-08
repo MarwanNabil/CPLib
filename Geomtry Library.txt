@@ -1,0 +1,77 @@
+typedef double TT;
+
+struct point{
+    TT x , y;
+    point(): x(0) , y(0){}
+    point(TT a , TT b){
+        x = a , y = b;
+    }
+    point operator+(const point&p)const{
+        return point(x + p.x , y + p.y);
+    }
+    point operator-(const point&p)const{
+        return point(x - p.x , y - p.y);
+    }
+    friend ostream& operator<<(ostream &os , const point&p){
+        return os << "(" << p.x << "," << p.y << ")";
+    }
+    bool operator <(const point&p)const{
+        if(x - p.x)
+            return x < p.x;
+        return y < p.y;
+    }
+    bool operator ==(const point&p)const{
+            return x == p.x && y == p.y;
+    }
+    bool operator !=(const point&p)const{
+            return !(*this == p);
+    }
+    void scan(){
+        scanf("%d%d" , &x , &y);
+    }
+    double len(){
+        return sqrt(x * x + y * y);
+    }
+    double dist(const point&p)const{
+        return (p - *this).len();
+    }
+    point operator*(TT d){
+        return point(x * d , y * d);
+    }
+    point operator/(TT d){
+        return point(x / d , y / d);
+    }
+    TT operator*(const point&p) const {
+        //Dot Product
+        return x * p.x + y * p.y;
+    }
+    TT operator^(const point&p) const {
+        //Cross Product
+        return x * p.y - y * p.x;
+    }
+    TT linePointDist(point a , point b , bool isLineSegment)const {
+        point c = *this;
+        if(isLineSegment){
+            if((b - a) * (c - b) > 0)
+                    return b.dist(c);
+            if((a - b) * (c - a) > 0)
+                    return a.dist(c);
+        }
+        return abs((b - a) ^ (c - a)) / (b - a).len();
+    }
+    double areaOfTri(point a , point b , point c){
+        point x = b - a;
+        point y = c - a;
+        return (x ^ y) / 2.0;
+    }
+    double areaOfPolygon(vector < point > &P){
+        TT area = 0;
+        for(int i = 1; i < P.size() - 1; ++i){
+            area += (P[i] - P[0]) ^ (P[i + 1] - P[0]);
+        }
+        return abs(area / 2.0);
+    }
+    bool isCollinear(point a , point b , point c){
+        return  areaOfTri(a , b , c) == 0;
+    }
+};

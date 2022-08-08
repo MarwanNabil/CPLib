@@ -1,0 +1,36 @@
+struct segT{
+
+    int s , e;
+    ll val;
+    vector < int > segtree;
+
+    segT(){
+        segtree.resize(N << 2 , 0);
+    };
+
+    void update(int P , int L , int R){
+         if(L > e || R < s){
+            return;
+         } else if(s <= L && R <= e) {
+            segtree[P] = val;
+            return;
+         }
+         int mid = (L + R) >> 1;
+         update( (P << 1) | 0 , L , mid + 0);
+         update( (P << 1) | 1 , mid + 1 , R);
+         segtree[P] = segtree[P << 1] + segtree[P << 1 | 1];
+    }
+
+    ll query(int P , int L , int R){
+        if(L > e || R < s){
+            return 0;
+        } else if(s <= L && R <= e){
+            return segtree[P];
+        } else {
+            int mid = (L + R) >> 1;
+            ll a = query( (P << 1) | 0 , L , mid + 0);
+            ll b = query( (P << 1) | 1 , mid + 1 , R);
+            return a + b;
+        }
+    }
+};

@@ -1,0 +1,16 @@
+vector < ll > primeFactors(long long num){
+    vector < ll > prm;
+    while (num % 2 == 0){
+        prm.push_back(2);
+        num = num/2;
+    }
+    for (ll i = 3; i*i <= num; i = i + 2){
+        while (num % i == 0){
+            prm.push_back(i);
+            num = num/i;
+        }
+    }
+    if (num > 2)
+        prm.push_back(num);
+    return prm;
+}

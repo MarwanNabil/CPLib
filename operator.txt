@@ -1,0 +1,12 @@
+mat operator*(const mat& A) const {
+        return mat( (((this->a) * A.a)%mod + ((this->b) * A.c)%mod)%mod ,
+                    (((this->a) * A.b)%mod + ((this->b) * A.d)%mod)%mod ,
+                    (((this->c) * A.a)%mod + ((this->d) * A.c)%mod)%mod ,
+                    (((this->c) * A.b)%mod + ((this->d) * A.d)%mod)%mod);
+    }
+
+
+
+A is the Right hand side variable
+
+this * A = new matrix

@@ -1,0 +1,11 @@
+bool isprm(ll x){
+    if(x == 2)
+        return 1;
+    if(x == 1 || x == 0)
+        return 0;
+    for(ll j = 2; j*j <= x; j++){
+        if(x % j == 0)
+            return 0;
+    }
+    return 1;
+}

@@ -1,0 +1,11 @@
+Gemotry 
+https://www.youtube.com/playlist?list=PLPSFnlxEu99HhuXoV64dhSxXbWOazgw1v
+
+Seniors topic (LCA , sparse table , sqrt dec. , segment tree)
+https://www.youtube.com/playlist?list=PLPSFnlxEu99HgAEayVzwxfLo0jwUU3rQD
+
+Segment tree
+https://www.youtube.com/playlist?list=PLPSFnlxEu99GKcA1y0T9d-sxcUdOyWy3x
+
+Seniors topic 2 (suffix array , LCP , KMP , Trie , SCC , bridges and artcultion points)
+https://www.youtube.com/playlist?list=PLPSFnlxEu99EMIPO77hVp8-K5TdvYp0XG

@@ -1,0 +1,26 @@
+const int MAXEDGE = 1e5+5;
+const int MAXNODE = 1e5+5;
+
+struct eee{
+	int nxtID;
+	int to;
+} Edge[MAXEDGE];
+
+int ne;
+int head[MAXNODE];
+
+void initG(){
+	ne = 0;
+	memset(head , -1 , sizeof head);
+}
+
+void addEdge(int u , int v){
+	Edge[ ne ].nxtID = head[u];
+	Edge[ ne ].to = v;
+	head[u] = ne++;
+}
+
+for(int u = head[cur]; ~u; u = Edge[u].nxtID){
+		int v = Edge[u].to;
+		//all nodes connected to node cur
+}

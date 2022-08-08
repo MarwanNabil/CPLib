@@ -1,0 +1,49 @@
+struct seg_tree{
+    int seg[N << 2];
+    int lzy[N << 2];
+    int L , R , Val;
+
+    void update(int i , int l , int r){
+         if(lzy[i]){
+            seg[i] += lzy[i] * (r - l + 1);
+            if(l != r){
+               lzy[i << 1 | 0] += lzy[i];
+               lzy[i << 1 | 1] += lzy[i];
+            }
+            lzy[i] = 0;
+         }
+         if(r < L || R < l)
+            return;
+         if(L <= l && r <= R){
+            seg[i] += Val * (r - l + 1);
+            if(l != r){
+                lzy[i << 1 | 0] += Val;
+                lzy[i << 1 | 1] += Val;
+            }
+            return;
+         }
+         int mid = (l + r) >> 1;
+         update(i << 1 | 0 , l + 0 , mid);
+         update(i << 1 | 1 , mid + 1 , r);
+         seg[i] = seg[i << 1] + seg[i << 1 | 1];
+    }
+
+    int get(int i , int l , int r){
+        if(lzy[i]){
+           seg[i] += lzy[i] * (r - l + 1);
+           if(l != r){
+              lzy[i << 1 | 0] += lzy[i];
+              lzy[i << 1 | 1] += lzy[i];
+           }
+           lzy[i] = 0;
+        }
+        if(R < l || r < L)
+            return 0;
+        if(L <= l && r <= R)
+            return seg[i];
+        int mid = (l + r) >> 1;
+        int A = get(i << 1 | 0 , l + 0 , mid);
+        int B = get(i << 1 | 1 , mid + 1 , r);
+        return A + B;
+    }
+};

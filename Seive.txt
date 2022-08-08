@@ -1,0 +1,7 @@
+    for(long long i = 3; i <= 1e5; i+=2){
+        if(nprm[i])
+            continue;
+        for(long long j = i*i; j < 18409202; j += i){
+            nprm[j] = 1;
+        }
+    }

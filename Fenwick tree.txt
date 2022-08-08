@@ -1,0 +1,18 @@
+struct fenwick_tree{
+	int _mx = 1e5+5;
+	ll bit[N];
+	ll get_sum(int idx){
+		ll ret = 0;
+		while(idx){
+			ret += bit[idx];
+			idx -= idx & -idx;
+		}
+		return ret;
+	}
+	void add(int idx , ll val){
+		while(idx <= _mx){
+			bit[idx] += val;
+			idx += idx & -idx;
+		}
+	}
+};
